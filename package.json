@@ -1,14 +1,14 @@
 {
-  "name": "discord-arts",
-  "version": "0.6.2",
-  "description": "Customized cards with Discord style",
+  "name": "discord-arts-thai",
+  "version": "1.0.0",
+  "description": "Customized cards with Discord style but Thai support",
   "main": "index.js",
   "types": "index.d.ts",
-  "author": "iAsure",
+  "author": "iAsure, ChayapholSmile",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iAsure/discord-arts.git"
+    "url": "https://github.com/ChayapholSmile/discord-arts-thai.git"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.33",
