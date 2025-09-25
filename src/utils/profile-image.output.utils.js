@@ -8,19 +8,18 @@ const {
   genTextAndAvatar,
   genAvatarFrame,
   genBorder,
-  genBadges,
   genBotVerifBadge,
   genXpBar,
   addShadow,
 } = require('../utils/profile-image.utils');
 
 GlobalFonts.registerFromPath(
-  `${path.join(__dirname, '..', '..', 'public', 'fonts')}/HelveticaBold.ttf`,
-  `Helvetica Bold`
+  `${path.join(__dirname, '..', '..', 'public', 'fonts')}/SF-Thonburi-Bold.ttf`,
+  `SF Thonburi Bold`
 );
 GlobalFonts.registerFromPath(
-  `${path.join(__dirname, '..', '..', 'public', 'fonts')}/Helvetica.ttf`,
-  `Helvetica`
+  `${path.join(__dirname, '..', '..', 'public', 'fonts')}/SF-Thonburi.ttf`,
+  `SF Thonburi`
 );
 
 async function genPng(data, options) {
@@ -42,7 +41,7 @@ async function genPng(data, options) {
   const cardFrame = await genFrame(badges, options);
   ctx.drawImage(cardFrame, 0, 0);
 
-  const cardTextAndAvatar = await genTextAndAvatar(data, options, userAvatar);
+  const cardTextAndAvatar = await genTextAndAvatar(data, options, userAvatar, ctx);
   const textAvatarShadow = addShadow(cardTextAndAvatar);
   ctx.drawImage(textAvatarShadow, 0, 0);
   ctx.drawImage(cardTextAndAvatar, 0, 0);
