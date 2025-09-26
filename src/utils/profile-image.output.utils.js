@@ -10,7 +10,7 @@ const {
   genBorder,
   genBotVerifBadge,
   genXpBar,
-  addShadow, // Assuming this is now a utility function to set canvas shadow properties
+  addShadow,
 } = require('../utils/profile-image.utils');
 
 GlobalFonts.registerFromPath(
@@ -29,32 +29,30 @@ async function genPng(data, options) {
 
   const userAvatar = (assets.avatarURL ?? assets.defaultAvatarURL) + '?size=512';
   const userBanner = assets.bannerURL ? assets.bannerURL + '?size=512' : null;
+  const badges = await getBadges(data, options);
 
-  // Use Promise.all to fetch and generate images that don't depend on each other
-  const [cardBase, cardFrame, cardTextAndAvatar, badges] = await Promise.all([
+  // Use Promise.all to generate images concurrently for better performance
+  const [cardBase, cardFrame, cardTextAndAvatar, cardBadges] = await Promise.all([
     genBase(options, userAvatar, userBanner),
-    genFrame(data, options),
+    genFrame(badges, options),
     genTextAndAvatar(data, options, userAvatar, ctx),
-    getBadges(data, options)
+    !options?.removeBadges ? genBadges(badges) : null,
   ]);
 
-  // --- 1. Clipping for rounded corners (fixed by using beginPath) ---
+  // --- 1. Clipping for rounded corners ---
   ctx.beginPath();
-  if (options?.removeBorder) {
-    ctx.roundRect(9, 9, 867, 285, [26]);
-  } else {
-    ctx.roundRect(0, 0, 885, 303, [34]);
-  }
+  if (options?.removeBorder) ctx.roundRect(9, 9, 867, 285, [26]);
+  else ctx.roundRect(0, 0, 885, 303, [34]);
   ctx.clip();
 
   // --- 2. Drawing the generated layers ---
   ctx.drawImage(cardBase, 0, 0);
   ctx.drawImage(cardFrame, 0, 0);
 
-  // Assuming addShadow now sets the canvas context properties
-  addShadow(ctx, '#000000', 8, 0, 0); // Example of setting shadow properties
+  // Draw text and avatar with shadow
+  addShadow(ctx, 'rgba(0, 0, 0, 0.5)', 8, 0, 0);
   ctx.drawImage(cardTextAndAvatar, 0, 0);
-  addShadow(ctx, 'none'); // Clear the shadow
+  addShadow(ctx, 'none');
 
   if (
     !options?.disableProfileTheme &&
@@ -75,17 +73,15 @@ async function genPng(data, options) {
     ctx.drawImage(border, 0, 0);
   }
 
-  // Drawing other elements with shadows
   if (basicInfo?.bot) {
     const botVerifBadge = await genBotVerifBadge(data);
-    addShadow(ctx, '#000000', 4, 0, 0);
+    addShadow(ctx, 'rgba(0, 0, 0, 0.5)', 4, 0, 0);
     ctx.drawImage(botVerifBadge, 0, 0);
     addShadow(ctx, 'none');
   }
 
-  if (!options?.removeBadges) {
-    const cardBadges = await genBadges(badges);
-    addShadow(ctx, '#000000', 4, 0, 0);
+  if (cardBadges) {
+    addShadow(ctx, 'rgba(0, 0, 0, 0.5)', 4, 0, 0);
     ctx.drawImage(cardBadges, 0, 0);
     addShadow(ctx, 'none');
   }
