@@ -13,7 +13,7 @@
 ## 📦 Installation
 
 ```bash
-npm i discord-arts@latest
+npm i discord-arts- thai@latest
 ```
 
 ## ✨ Features
