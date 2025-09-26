@@ -2,10 +2,10 @@
 <div align='center'>
   <img src='https://i.imgur.com/VBVAWrM.png' alt='Discord-Arts Banner' />
   <p align='center'>
-  <a href='https://www.npmjs.com/package/discord-arts'>
-    <img src='https://img.shields.io/npm/v/discord-arts?label=version&style=for-the-badge' alt='version' />
-    <img src='https://img.shields.io/bundlephobia/min/discord-arts?label=size&style=for-the-badge' alt='size' />
-    <img src='https://img.shields.io/npm/dt/discord-arts?style=for-the-badge' alt='downloads' />
+  <a href='https://www.npmjs.com/package/discord-arts-thai'>
+    <img src='https://img.shields.io/npm/v/discord-arts-thai?label=version&style=for-the-badge' alt='version' />
+    <img src='https://img.shields.io/bundlephobia/min/discord-arts-thai?label=size&style=for-the-badge' alt='size' />
+    <img src='https://img.shields.io/npm/dt/discord-arts-thai?style=for-the-badge' alt='downloads' />
   </a>
 </p>
 </div>
