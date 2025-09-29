@@ -8,12 +8,10 @@ const path = require("path");
 async function fetchUserData(userId) {
   const packageJsonPath = path.join(__dirname, "..", "..", "package.json");
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-  const version = packageJson.version;
 
   try {
     const response = await fetch(`${BASE_URL}/${userId}`, {
       headers: {
-        "x-darts-version": version,
       },
     });
 
